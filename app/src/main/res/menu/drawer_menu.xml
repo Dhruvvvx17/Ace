@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_attendance"
+            android:icon="@drawable/ic_attendance"
+            android:title="@string/attendance" />
+        <item
+            android:id="@+id/nav_reminders"
+            android:icon="@drawable/ic_reminders"
+            android:title="@string/reminders" />
+        <item
+            android:id="@+id/nav_timetable"
+            android:icon="@drawable/ic_timetable"
+            android:title="@string/timetable" />
+        <item
+            android:id="@+id/nav_files"
+            android:icon="@drawable/ic_insert_files"
+            android:title="@string/files" />
+    </group>
 
+
+    <item android:title="Actions">
+        <menu>
+            <item
+                android:id="@+id/nav_temp1"
+                android:icon="@drawable/ic_temp"
+                android:title="temporary" />
+            <item
+                android:id="@+id/nav_temp2"
+                android:icon="@drawable/ic_temp"
+                android:title="temporary" />
+        </menu>
+    </item>
 </menu>

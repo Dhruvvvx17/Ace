@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ace</string>
+    <string name="attendance">Attendance</string>
+    <string name="reminders">Reminders</string>
+    <string name="timetable">Timetable</string>
+    <string name="files">Files</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
