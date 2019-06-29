@@ -6,4 +6,7 @@
     <string name="files">Files</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="appNameCaps">ACE</string>
+    <string name="heading1">One stop for all college requirements</string>
+    <string name="sign_out">Sign out</string>
 </resources>
