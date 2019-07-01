@@ -1,51 +1,40 @@
 package com.project.ace;
 
-import android.graphics.Color;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class AttendanceFragment extends Fragment {
-
+public class temp extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference AttendanceRef = db.collection("Attendance");
+
     private AttendanceAdapter adapter;
-    View view;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_attendance,container,false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_temp);
         setUpRecyclerView();
-        return view;
     }
 
     private void setUpRecyclerView() {
         Query query = AttendanceRef.orderBy("classAttended", Query.Direction.DESCENDING);
-
         FirestoreRecyclerOptions<Attendance> options = new FirestoreRecyclerOptions.Builder<Attendance>()
                 .setQuery(query, Attendance.class)
                 .build();
 
         adapter = new AttendanceAdapter(options);
 
-        RecyclerView recyclerView = view.findViewById(R.id.attendance_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.attendance_recycler_view_new);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
