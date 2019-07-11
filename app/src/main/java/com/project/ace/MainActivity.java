@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String userEmail;
     Uri userProfile;
     String userProfileURI;
+
     TextView userNameTextview;
     TextView userEmailTextview;
     ImageView userProfileImage;

@@ -25,15 +25,15 @@
         android:layout_height="wrap_content"
         android:text="@string/target_attendance"
         android:layout_below="@id/new_course_code_edit"
+        android:layout_marginTop="5dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <SeekBar
         android:id="@+id/seek_bar_target"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view_target"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@id/text_view_target_value"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"/>
 
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/text_view_target"
+        android:layout_below="@id/new_course_code_edit"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="85"/>
 

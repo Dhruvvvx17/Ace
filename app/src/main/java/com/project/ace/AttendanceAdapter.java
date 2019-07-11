@@ -32,10 +32,25 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
 
         classTotal = model.getClassTotal();
         classAttended = model.getClassAttended();
-        attendancePercentage = ((float)classAttended/(float)classTotal)*100;                            //percentage - float
-        attendancePerc = (String.format("%.2f",attendancePercentage)+"%");                                    //percentage - string
+
+        if(classTotal == 0){
+            holder.textViewCourseName.setText(model.getCourseName());
+            holder.textViewCourseCode.setText(model.getCourseCode());
+            holder.textViewFraction.setText("0/0");
+            holder.textViewPercentage.setText("");
+            holder.textViewMessage.setText("");
+            return;
+        }
+
+        attendancePercentage = ((float)classAttended/(float)classTotal)*100;   //percentage - float
+        attendancePerc = (String.format("%.2f",attendancePercentage)+"%");     //percentage - string
+
         attendanceFraction = (Integer.toString(classAttended)+"/"+Integer.toString(classTotal));        //fraction - string
+
         target = model.getTarget();
+
+
+
         if(target > attendancePercentage){
             classRequired = (float) ((target*classTotal) - (100*classAttended)) /(float) (100 - target);
             finalclassRequired = Integer.toString((int)Math.ceil((double)classRequired));

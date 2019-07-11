@@ -3,19 +3,42 @@ package com.project.ace;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class NewCourseDialog extends AppCompatDialogFragment {
+    private static final String TAG = "add course";
     private EditText editTextCourseName;
     private EditText editTextCourseCode;
     private SeekBar CourseTarget;
     private TextView seekBarProgress;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    String courseName;
+    String courseCode;
+    Float target;
+    int classAttended = 0,classTotal = 0;
+    String userUID;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -33,7 +56,36 @@ public class NewCourseDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        courseName = editTextCourseName.getText().toString();
+                        courseCode = editTextCourseCode.getText().toString();
+                        String temp = seekBarProgress.getText().toString();
+                        target = Float.valueOf(temp.substring(0,temp.length()-1));
 
+                        userUID = user.getUid();
+
+                        Map<String, Object> course = new HashMap<>();
+                        course.put("courseName", courseName);
+                        course.put("courseCode", courseCode);
+                        course.put("target", target);
+                        course.put("classTotal", classTotal);
+                        course.put("classAttended", classAttended);
+                        course.put("userUID",userUID);
+
+                        db.collection("Attendance")
+                                .document()
+                                .set(course)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
                     }
                 });
 
@@ -47,7 +99,7 @@ public class NewCourseDialog extends AppCompatDialogFragment {
         CourseTarget.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                seekBarProgress.setText(""+progress+"%");
             }
 
             @Override
