@@ -79,7 +79,6 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             @Override
             public void onClick(View v) {
                 attendedClass(holder.getAdapterPosition());
-                Toast.makeText(holder.attendedButton.getContext(),"clicked",Toast.LENGTH_SHORT).show();
             }
         });
 
