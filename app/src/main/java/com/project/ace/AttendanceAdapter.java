@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +58,12 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             if (target > attendancePercentage) {
                 classRequired = ((target * classTotal) - (100 * classAttended)) / (100 - target);
                 finalclassRequired = Integer.toString((int) Math.ceil((double) classRequired));
-                holder.textViewMessage.setText("Attend next " + finalclassRequired + " classes to reach target");
+                if((int)Math.ceil((double)classRequired) == 1){
+                    holder.textViewMessage.setText("Attend next class to reach target");
+                }
+                else{
+                    holder.textViewMessage.setText("Attend next " + finalclassRequired + " classes to reach target");
+                }
             } else {
                 holder.textViewMessage.setText("Attendance above target");
             }
@@ -80,6 +87,14 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             @Override
             public void onClick(View v) {
                 missedClass(holder.getAdapterPosition());
+            }
+        });
+
+        holder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open dialog box
+                //with options for editing course details and deleting course
             }
         });
     }
@@ -117,6 +132,7 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
         TextView textViewFraction;
         Button attendedButton;
         Button missedButton;
+        ImageButton imageButton;
 
         public AttendanceHolder(@NonNull final View itemView) {
             super(itemView);
@@ -128,6 +144,7 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
 
             attendedButton = itemView.findViewById(R.id.attendedClass);
             missedButton = itemView.findViewById(R.id.missedClass);
+            imageButton = itemView.findViewById(R.id.more_options);
         }
     }
 }

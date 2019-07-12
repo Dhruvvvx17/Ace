@@ -9,7 +9,14 @@
     <string name="appNameCaps">ACE</string>
     <string name="heading1">One stop for all college requirements</string>
     <string name="sign_out">Sign out</string>
-    <string name="course_name">Course name</string>
     <string name="course_code">Course code</string>
     <string name="target_attendance">Target attendance</string>
+    <string name="explore_more_options">Explore more options</string>
+    <string name="temp_text1">Attend next 1 class to hit target</string>
+    <string name="course_name">Course name</string>
+    <string name="temp_text2">90%</string>
+    <string name="temp_text3">Course code</string>
+    <string name="temp_text4">9/10</string>
+    <string name="delete">Delete</string>
+    <string name="settings">Settings</string>
 </resources>
