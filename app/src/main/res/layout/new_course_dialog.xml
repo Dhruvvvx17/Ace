@@ -46,4 +46,15 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="85"/>
 
+    <TextView
+        android:id="@+id/text_view_enter_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seek_bar_target"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/enter_above_details"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"/>
+
 </RelativeLayout>

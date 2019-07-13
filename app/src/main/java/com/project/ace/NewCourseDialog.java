@@ -27,7 +27,7 @@ public class NewCourseDialog extends AppCompatDialogFragment {
     private EditText editTextCourseName;
     private EditText editTextCourseCode;
     private SeekBar CourseTarget;
-    private TextView seekBarProgress;
+    private TextView seekBarProgress , enterDetailsMsg;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -56,36 +56,43 @@ public class NewCourseDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         courseName = editTextCourseName.getText().toString();
                         courseCode = editTextCourseCode.getText().toString();
                         String temp = seekBarProgress.getText().toString();
                         target = Float.valueOf(temp.substring(0,temp.length()-1));
 
-                        userUID = user.getUid();
 
-                        Map<String, Object> course = new HashMap<>();
-                        course.put("courseName", courseName);
-                        course.put("courseCode", courseCode);
-                        course.put("target", target);
-                        course.put("classTotal", classTotal);
-                        course.put("classAttended", classAttended);
-                        course.put("userUID",userUID);
+                        if(courseName.isEmpty() || courseCode.isEmpty() || target==0 ){
+                            enterDetailsMsg.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            userUID = user.getUid();
+                            Map<String, Object> course = new HashMap<>();
+                            course.put("courseName", courseName);
+                            course.put("courseCode", courseCode);
+                            course.put("target", target);
+                            course.put("classTotal", classTotal);
+                            course.put("classAttended", classAttended);
+                            course.put("userUID",userUID);
 
-                        db.collection("Attendance")
-                                .document()
-                                .set(course)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error writing document", e);
-                                    }
-                                });
+                            db.collection("Attendance")
+                                    .document()
+                                    .set(course)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error writing document", e);
+                                        }
+                                    });
+                            enterDetailsMsg.setVisibility(View.INVISIBLE);
+                        }
                     }
                 });
 
@@ -93,6 +100,7 @@ public class NewCourseDialog extends AppCompatDialogFragment {
         editTextCourseCode = view.findViewById(R.id.new_course_code_edit);
         CourseTarget = view.findViewById(R.id.seek_bar_target);
         seekBarProgress = view.findViewById(R.id.text_view_target_value);
+        enterDetailsMsg = view.findViewById(R.id.text_view_enter_details);
 
         seekBarProgress.setText(CourseTarget.getProgress()+"%");
 
