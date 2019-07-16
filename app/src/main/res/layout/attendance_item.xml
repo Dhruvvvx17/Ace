@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/attendance_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -30,10 +31,10 @@
             android:id="@+id/more_options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_more_vert"
             android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/explore_more_options"
-            android:background="@android:color/transparent"/>
+            android:src="@drawable/ic_more_vert" />
 
         <TextView
             android:id="@+id/course_attendance_percentage"
@@ -63,13 +64,13 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_below="@+id/course_attendance_percentage"
+            android:layout_marginTop="5dp"
             android:layout_toStartOf="@id/course_attendance_fraction"
             android:background="@drawable/green_round_btn"
             android:textAlignment="center"
             android:textColor="@color/White"
-            android:layout_marginTop="5dp"
 
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/course_attendance_fraction"
@@ -77,8 +78,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/course_attendance_percentage"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/missedClass"
             android:maxLines="1"
             android:text="@string/temp_text4"
@@ -90,11 +91,11 @@
             android:layout_height="30dp"
             android:layout_below="@+id/course_attendance_percentage"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
             android:background="@drawable/red_round_btn"
             android:textAlignment="center"
             android:textColor="@color/White"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/attendance_message"
@@ -108,7 +109,6 @@
             android:paddingTop="5dp"
             android:text="@string/temp_text1"
             android:textAppearance="@style/TextAppearance.AppCompat" />
-
 
 
     </RelativeLayout>

@@ -1,10 +1,14 @@
 package com.project.ace;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.ActionMode;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -16,6 +20,8 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, AttendanceAdapter.AttendanceHolder> {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();     //firestore instance
+    private ActionMode mActionMode;
+
 
     public AttendanceAdapter(@NonNull FirestoreRecyclerOptions<Attendance> options) {
         super(options);
@@ -45,8 +53,7 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             holder.textViewFraction.setText("0/0");
             holder.textViewPercentage.setText("");
             holder.textViewMessage.setText("");
-        }
-        else{
+        } else {
             attendancePercentage = ((float) classAttended / (float) classTotal) * 100;   //percentage - float
             attendancePerc = (String.format("%.2f", attendancePercentage) + "%");     //percentage - string
 
@@ -58,10 +65,9 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             if (target > attendancePercentage) {
                 classRequired = ((target * classTotal) - (100 * classAttended)) / (100 - target);
                 finalclassRequired = Integer.toString((int) Math.ceil((double) classRequired));
-                if((int)Math.ceil((double)classRequired) == 1){
+                if ((int) Math.ceil((double) classRequired) == 1) {
                     holder.textViewMessage.setText("Attend next class to reach target");
-                }
-                else{
+                } else {
                     holder.textViewMessage.setText("Attend next " + finalclassRequired + " classes to reach target");
                 }
             } else {
@@ -96,6 +102,7 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
                 //with options for editing course details and deleting course
             }
         });
+
     }
 
     @NonNull
@@ -122,7 +129,30 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
         docRef.update("classTotal", FieldValue.increment(1));
     }
 
-    class AttendanceHolder extends RecyclerView.ViewHolder {
+    public void deleteCourse(int position){
+        //delete from firebase
+        final String id = getSnapshots().getSnapshot(position).getId();
+        db.collection("Attendance").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("delete",id+"deleted");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("delete",id+"could not be deleted");
+                    }
+                });
+    }
+
+    public void editCourse(int position){
+        //delete from firebase
+    }
+
+    class AttendanceHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         TextView textViewCourseName;
         TextView textViewCourseCode;
@@ -144,6 +174,15 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             attendedButton = itemView.findViewById(R.id.attendedClass);
             missedButton = itemView.findViewById(R.id.missedClass);
             imageButton = itemView.findViewById(R.id.more_options);
+
+            imageButton.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+            contextMenu.add(this.getAdapterPosition(),101,0,"Edit course");
+            contextMenu.add(this.getAdapterPosition(),102,1,"Delete course");
         }
     }
 }

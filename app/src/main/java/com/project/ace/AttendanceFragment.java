@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,6 +68,24 @@ public class AttendanceFragment extends Fragment  {
         NewCourseDialog newCourseDialog = new NewCourseDialog();
         newCourseDialog.show(getFragmentManager(),"New Course Dialog");
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 101:
+                adapter.editCourse(item.getGroupId());
+                Toast.makeText(getActivity(),"Edit",Toast.LENGTH_SHORT).show();
+                return true;
+            case 102:
+                adapter.deleteCourse(item.getGroupId());
+                Toast.makeText(getActivity(),"Delete",Toast.LENGTH_SHORT).show();
+                return true;
+             default:
+                 return super.onContextItemSelected(item);
+        }
+    }
+
+
 
     @Override
     public void onStart() {
