@@ -3,7 +3,7 @@ package com.project.ace;
 public class Attendance {
     private String courseName;
     private String courseCode;
-    private float target;
+    private int target;
     private int classAttended;
     private int classTotal;
 
@@ -11,7 +11,7 @@ public class Attendance {
         //Empty constructor
     }
 
-    public Attendance(String courseName,String courseCode,float target,int classAttended,int classTotal){
+    public Attendance(String courseName,String courseCode,int target,int classAttended,int classTotal){
         this.courseName = courseName;
         this.courseCode = courseCode;
         this.target = target;
@@ -35,11 +35,11 @@ public class Attendance {
         this.courseCode = courseCode;
     }
 
-    public float getTarget() {
+    public int getTarget() {
         return target;
     }
 
-    public void setTarget(float target) {
+    public void setTarget(int target) {
         this.target = target;
     }
 

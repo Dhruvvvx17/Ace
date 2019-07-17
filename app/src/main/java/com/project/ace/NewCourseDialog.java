@@ -35,7 +35,7 @@ public class NewCourseDialog extends AppCompatDialogFragment {
 
     String courseName;
     String courseCode;
-    Float target;
+    int target;
     int classAttended = 0,classTotal = 0;
     String userUID;
 
@@ -60,10 +60,10 @@ public class NewCourseDialog extends AppCompatDialogFragment {
                         courseName = editTextCourseName.getText().toString();
                         courseCode = editTextCourseCode.getText().toString();
                         String temp = seekBarProgress.getText().toString();
-                        target = Float.valueOf(temp.substring(0,temp.length()-1));
+                        target = Integer.valueOf(temp.substring(0,temp.length()-1));
 
 
-                        if(courseName.isEmpty() || courseCode.isEmpty() || target==0 ){
+                        if(courseName.isEmpty() || target==0 ){
                             enterDetailsMsg.setVisibility(View.VISIBLE);
                         }
                         else{
@@ -107,7 +107,7 @@ public class NewCourseDialog extends AppCompatDialogFragment {
         CourseTarget.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekBarProgress.setText(""+progress+"%");
+                seekBarProgress.setText(progress+"%");
             }
 
             @Override

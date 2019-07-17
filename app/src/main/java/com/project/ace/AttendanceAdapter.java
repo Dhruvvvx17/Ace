@@ -1,11 +1,15 @@
 package com.project.ace;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -13,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,8 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, AttendanceAdapter.AttendanceHolder> {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();     //firestore instance
-    private ActionMode mActionMode;
-
+    public Context context;
 
     public AttendanceAdapter(@NonNull FirestoreRecyclerOptions<Attendance> options) {
         super(options);
@@ -40,8 +44,8 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
 
     @Override
     protected void onBindViewHolder(@NonNull final AttendanceHolder holder, int position, @NonNull Attendance model) {
-        int classTotal, classAttended;
-        float attendancePercentage, target, classRequired;
+        int classTotal, classAttended, target;
+        float attendancePercentage, classRequired;
         final String attendanceFraction, attendancePerc, finalclassRequired;
 
         classTotal = model.getClassTotal();
@@ -63,7 +67,7 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
 
 
             if (target > attendancePercentage) {
-                classRequired = ((target * classTotal) - (100 * classAttended)) / (100 - target);
+                classRequired = (((float) target * classTotal) - (100 * classAttended)) / (100 - target);
                 finalclassRequired = Integer.toString((int) Math.ceil((double) classRequired));
                 if ((int) Math.ceil((double) classRequired) == 1) {
                     holder.textViewMessage.setText("Attend next class to reach target");
@@ -92,14 +96,6 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
             @Override
             public void onClick(View v) {
                 missedClass(holder.getAdapterPosition());
-            }
-        });
-
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //open dialog box
-                //with options for editing course details and deleting course
             }
         });
 
@@ -148,8 +144,11 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
                 });
     }
 
-    public void editCourse(int position){
+    public void editCourse(int position,Context context,FragmentManager manager){
         //delete from firebase
+        final String id = getSnapshots().getSnapshot(position).getId();
+        EditCourseDialog editCourseDialog = new EditCourseDialog(id);
+        editCourseDialog.show(manager,"Edit Course Dialog");
     }
 
     class AttendanceHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {

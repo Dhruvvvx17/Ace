@@ -73,12 +73,10 @@ public class AttendanceFragment extends Fragment  {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case 101:
-                adapter.editCourse(item.getGroupId());
-                Toast.makeText(getActivity(),"Edit",Toast.LENGTH_SHORT).show();
+                adapter.editCourse(item.getGroupId(),getActivity(),getFragmentManager());
                 return true;
             case 102:
                 adapter.deleteCourse(item.getGroupId());
-                Toast.makeText(getActivity(),"Delete",Toast.LENGTH_SHORT).show();
                 return true;
              default:
                  return super.onContextItemSelected(item);

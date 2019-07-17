@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edit_course_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <EditText
+        android:id="@+id/edit_course_code_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_code"
+        android:layout_below="@+id/edit_course_name_edit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+        android:id="@+id/edit_text_view_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/target_attendance"
+        android:layout_below="@id/edit_course_code_edit"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <SeekBar
+        android:id="@+id/edit_seek_bar_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_text_view_target"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/edit_text_view_target_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/edit_course_code_edit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="85%"/>
+
+</RelativeLayout>
