@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.Fragments;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +19,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.project.ace.RecyclerViewItems.Attendance;
+import com.project.ace.Adapters.AttendanceAdapter;
+import com.project.ace.Dialogs.NewCourseDialog;
+import com.project.ace.R;
 
 public class AttendanceFragment extends Fragment  {
 
@@ -79,12 +82,15 @@ public class AttendanceFragment extends Fragment  {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case 101:
-                adapter.editCourse(item.getGroupId(),getActivity(),getFragmentManager());
+                adapter.editCourse(item.getGroupId(),getFragmentManager());
                 return true;
             case 102:
+                adapter.resetCourse(item.getGroupId());
+                return true;
+            case 103:
                 adapter.deleteCourse(item.getGroupId());
                 return true;
-             default:
+            default:
                  return super.onContextItemSelected(item);
         }
     }

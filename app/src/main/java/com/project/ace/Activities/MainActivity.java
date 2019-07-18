@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +23,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.project.ace.Fragments.AttendanceFragment;
+import com.project.ace.Fragments.FilesFragment;
+import com.project.ace.Fragments.RemindersFragment;
+import com.project.ace.Fragments.TimetableFragment;
+import com.project.ace.R;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{

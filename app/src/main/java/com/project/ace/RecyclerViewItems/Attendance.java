@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.RecyclerViewItems;
 
 public class Attendance {
     private String courseName;

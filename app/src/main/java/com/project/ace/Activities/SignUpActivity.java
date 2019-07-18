@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.Activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.project.ace.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -69,9 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
-
 
         SignInbutton.setOnClickListener(new View.OnClickListener() {
             @Override

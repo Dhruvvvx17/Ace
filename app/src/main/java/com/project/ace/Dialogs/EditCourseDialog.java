@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.Dialogs;
 
 
 import android.app.Dialog;
@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.project.ace.R;
 
 public class EditCourseDialog extends AppCompatDialogFragment {
 
@@ -29,14 +30,13 @@ public class EditCourseDialog extends AppCompatDialogFragment {
 
     private String id, courseName, courseCode, newCourseName, newCourseCode, TAG = "fetch";
     private int target, newTarget;
-    boolean check = false;
 
     private EditText editTextCourseName;
     private EditText editTextCourseCode;
     private SeekBar courseTarget;
     private TextView seekBarProgress;
 
-    EditCourseDialog(String id){
+    public EditCourseDialog(String id){
         this.id = id;
     }
 
@@ -46,8 +46,8 @@ public class EditCourseDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.edit_course_dialog,null);
 
-        editTextCourseName = (EditText) view.findViewById(R.id.edit_course_name_edit);
-        editTextCourseCode = (EditText) view.findViewById(R.id.edit_course_code_edit);
+        editTextCourseName = view.findViewById(R.id.edit_course_name_edit);
+        editTextCourseCode = view.findViewById(R.id.edit_course_code_edit);
         courseTarget = view.findViewById(R.id.edit_seek_bar_target);
         seekBarProgress = view.findViewById(R.id.edit_text_view_target_value);
 

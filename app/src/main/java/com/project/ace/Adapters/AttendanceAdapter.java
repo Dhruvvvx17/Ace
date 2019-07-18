@@ -1,27 +1,18 @@
-package com.project.ace;
+package com.project.ace.Adapters;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,12 +21,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.project.ace.RecyclerViewItems.Attendance;
+import com.project.ace.Dialogs.EditCourseDialog;
+import com.project.ace.R;
 
 
 public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, AttendanceAdapter.AttendanceHolder> {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();     //firestore instance
-    public Context context;
 
     public AttendanceAdapter(@NonNull FirestoreRecyclerOptions<Attendance> options) {
         super(options);
@@ -125,6 +118,31 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
         docRef.update("classTotal", FieldValue.increment(1));
     }
 
+    public void editCourse(int position,FragmentManager manager){
+        //delete from firebase
+        final String id = getSnapshots().getSnapshot(position).getId();
+        EditCourseDialog editCourseDialog = new EditCourseDialog(id);
+        editCourseDialog.show(manager,"Edit Course Dialog");
+    }
+
+    public void resetCourse(int position){
+        final String id = getSnapshots().getSnapshot(position).getId();
+        db.collection("Attendance").document(id)
+                .update("classAttended",0,"classTotal",0)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Update",id+"updated");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Update",id+"updated");
+                    }
+                });
+    }
+
     public void deleteCourse(int position){
         //delete from firebase
         final String id = getSnapshots().getSnapshot(position).getId();
@@ -142,13 +160,6 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
                         Log.d("delete",id+"could not be deleted");
                     }
                 });
-    }
-
-    public void editCourse(int position,Context context,FragmentManager manager){
-        //delete from firebase
-        final String id = getSnapshots().getSnapshot(position).getId();
-        EditCourseDialog editCourseDialog = new EditCourseDialog(id);
-        editCourseDialog.show(manager,"Edit Course Dialog");
     }
 
     class AttendanceHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -181,7 +192,8 @@ public class AttendanceAdapter extends FirestoreRecyclerAdapter<Attendance, Atte
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
 
             contextMenu.add(this.getAdapterPosition(),101,0,"Edit course");
-            contextMenu.add(this.getAdapterPosition(),102,1,"Delete course");
+            contextMenu.add(this.getAdapterPosition(),102,1,"Reset classes");
+            contextMenu.add(this.getAdapterPosition(),103,2,"Delete course");
         }
     }
 }

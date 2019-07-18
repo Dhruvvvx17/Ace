@@ -1,4 +1,4 @@
-package com.project.ace;
+package com.project.ace.Dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.project.ace.R;
 
 import java.util.HashMap;
 import java.util.Map;
