@@ -73,7 +73,7 @@ public class AttendanceFragment extends Fragment  {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    public void openDialog(){
+    private void openDialog(){
         NewCourseDialog newCourseDialog = new NewCourseDialog();
         newCourseDialog.show(getFragmentManager(),"New Course Dialog");
     }

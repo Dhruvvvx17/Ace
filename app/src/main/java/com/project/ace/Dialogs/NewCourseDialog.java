@@ -25,20 +25,17 @@ import java.util.Map;
 
 public class NewCourseDialog extends AppCompatDialogFragment {
     private static final String TAG = "add course";
-    private EditText editTextCourseName;
-    private EditText editTextCourseCode;
+    private EditText editTextCourseName,editTextCourseCode;
     private SeekBar CourseTarget;
     private TextView seekBarProgress , enterDetailsMsg;
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    String courseName;
-    String courseCode;
-    int target;
-    int classAttended = 0,classTotal = 0;
-    String userUID;
+    private String courseName, courseCode;
+    private int target,classAttended = 0,classTotal = 0;
+    private String userUID;
 
 
     @Override

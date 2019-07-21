@@ -1,5 +1,6 @@
 package com.project.ace.Activities;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -37,11 +38,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseAuth.AuthStateListener mAuthListener;
     GoogleSignInClient mGoogleSignInClient;
 
-    NavigationView navigationView;
 
     String userName;
     String userEmail;
-    Uri userProfile;
     String userProfileURI;
 
     TextView userNameTextview;
