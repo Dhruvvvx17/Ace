@@ -12,9 +12,13 @@ import com.project.ace.R;
 
 public class TimetableFragment extends Fragment {
 
+    View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_timetable,container,false);
+        view = inflater.inflate(R.layout.fragment_timetable,container,false);
+        getActivity().setTitle("Timetable");
+        return view;
     }
 }

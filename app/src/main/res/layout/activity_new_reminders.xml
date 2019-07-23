@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="176dp"/>
+        android:maxLines="1"
+        android:layout_marginTop="126dp"/>
 
     <EditText
         android:id="@+id/new_reminder_description"

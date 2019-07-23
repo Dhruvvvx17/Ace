@@ -28,4 +28,7 @@
     <string name="set_time">SET TIME</string>
     <string name="set_date">SET DATE</string>
     <string name="set_reminder">SET REMINDER</string>
+    <string name="title_name">Title</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>

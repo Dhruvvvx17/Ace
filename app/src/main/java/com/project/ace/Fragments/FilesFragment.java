@@ -12,9 +12,13 @@ import com.project.ace.R;
 
 public class FilesFragment extends Fragment {
 
+    View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_files,container,false);
+        view = inflater.inflate(R.layout.fragment_files,container,false);
+        getActivity().setTitle("Files");
+        return view;
     }
 }

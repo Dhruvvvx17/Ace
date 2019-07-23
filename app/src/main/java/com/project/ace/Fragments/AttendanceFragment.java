@@ -46,6 +46,7 @@ public class AttendanceFragment extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_attendance,container,false);
+        getActivity().setTitle("Attendance");
         addNewCourse = view.findViewById(R.id.add_course_button);
         addNewCourse.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -83,20 +83,20 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(reminderTitle.getText().toString().isEmpty())
+
+                userUID = user.getUid();
+                title = reminderTitle.getText().toString().trim();
+                description = reminderDescription.getText().toString().trim();
+                time = reminderTime.getText().toString();
+                date = reminderDate.getText().toString();
+                if(title.isEmpty())
                     Toast.makeText(getApplicationContext(),"Enter a title",Toast.LENGTH_SHORT).show();
-                else if(reminderDate.getText().toString().isEmpty())
+                else if(date.isEmpty())
                     Toast.makeText(getApplicationContext(),"Set a valid date",Toast.LENGTH_SHORT).show();
-                else if(reminderTime.getText().toString().isEmpty())
+                else if(time.isEmpty())
                     Toast.makeText(getApplicationContext(),"Set a valid time",Toast.LENGTH_SHORT).show();
                 else{
                     //Everything is valid, upload data to fire-base. Set alarm.
-
-                    userUID = user.getUid();
-                    title = reminderTitle.getText().toString();
-                    description = reminderDescription.getText().toString();
-                    time = reminderTime.getText().toString();
-                    date = reminderDate.getText().toString();
 
                     Map<String, Object> reminder = new HashMap<>();
                     reminder.put("title", title);
@@ -148,7 +148,6 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
     @Override
     public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
         Calendar c = Calendar.getInstance();
-        String time,mins,hrs;
         int currentHour = c.get(Calendar.HOUR_OF_DAY);
         int currentMinute = c.get(Calendar.MINUTE);
         if(check1==1) {
@@ -157,16 +156,7 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
             else if (currentHour == hours && currentMinute > minutes)
                 Toast.makeText(getApplicationContext(), "Cannot set reminder in the past.Enter a valid time", Toast.LENGTH_LONG).show();
             else{
-                mins = Integer.toString(minutes);
-                hrs = Integer.toString(hours);
-                if(mins.length() == 1)
-                    mins = "0"+mins;
-                if(hrs.length() == 1)
-                    hrs = "0"+hours;
-
-                time = hrs+":"+mins;
-                reminderTime.setText(time);
-                reminderTime.setVisibility(View.VISIBLE);
+                setTime(minutes,hours);
             }
         }
         else{
@@ -176,16 +166,35 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                 check2 = 1;
             else
                 check2 = 0;
-            mins = Integer.toString(minutes);
-            hrs = Integer.toString(hours);
-            if(mins.length() == 1)
-                mins = "0"+mins;
-            if(hrs.length() == 1)
-                hrs = "0"+hours;
-
-            time = hrs+":"+mins;
-            reminderTime.setText(time);
-            reminderTime.setVisibility(View.VISIBLE);
+            setTime(minutes,hours);
         }
+    }
+
+    public void setTime(int minutes,int hours){
+        String mins,hrs,AMorPM = "AM";
+        mins = Integer.toString(minutes);
+        hrs = Integer.toString(hours);
+        switch (hrs){
+            case "13":  hrs = "1";   AMorPM = "PM";  break;
+            case "14":  hrs = "2";   AMorPM = "PM";  break;
+            case "15":  hrs = "3";   AMorPM = "PM";  break;
+            case "16":  hrs = "4";   AMorPM = "PM";  break;
+            case "17":  hrs = "5";   AMorPM = "PM";  break;
+            case "18":  hrs = "6";   AMorPM = "PM";  break;
+            case "19":  hrs = "7";   AMorPM = "PM";  break;
+            case "20":  hrs = "8";   AMorPM = "PM";  break;
+            case "21":  hrs = "9";   AMorPM = "PM";  break;
+            case "22":  hrs = "10";  AMorPM = "PM";  break;
+            case "23":  hrs = "11";  AMorPM = "PM";  break;
+            case "24":  hrs = "12";  AMorPM = "PM";  break;
+        }
+        if(mins.length() == 1)
+            mins = "0"+mins;
+        if(hrs.length() == 1)
+            hrs = "0"+hrs;
+
+        String time = hrs+":"+mins+" "+AMorPM;
+        reminderTime.setText(time);
+        reminderTime.setVisibility(View.VISIBLE);
     }
 }

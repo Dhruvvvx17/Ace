@@ -24,6 +24,7 @@ public class RemindersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_reminders,container,false);
+        getActivity().setTitle("Reminders");
         addNewReminder = view.findViewById(R.id.add_reminder_button);
         addNewReminder.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -55,13 +55,13 @@ public class NewCourseDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        courseName = editTextCourseName.getText().toString();
-                        courseCode = editTextCourseCode.getText().toString();
+                        courseName = editTextCourseName.getText().toString().trim();
+                        courseCode = editTextCourseCode.getText().toString().trim();
                         String temp = seekBarProgress.getText().toString();
                         target = Integer.valueOf(temp.substring(0,temp.length()-1));
 
 
-                        if(courseName.isEmpty() || target==0 ){
+                        if(courseName.isEmpty() || target==0){
                             enterDetailsMsg.setVisibility(View.VISIBLE);
                         }
                         else{
