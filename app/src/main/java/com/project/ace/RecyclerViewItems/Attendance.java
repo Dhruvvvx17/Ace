@@ -23,39 +23,19 @@ public class Attendance {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public String getCourseCode() {
         return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
     }
 
     public int getTarget() {
         return target;
     }
 
-    public void setTarget(int target) {
-        this.target = target;
-    }
-
-    public int getClassAttended() {
+    public int getClassAttended(){
         return classAttended;
     }
 
-    public void setClassAttended(int classAttended) {
-        this.classAttended = classAttended;
-    }
-
-    public int getClassTotal() {
+    public int getClassTotal(){
         return classTotal;
-    }
-
-    public void setClassTotal(int classTotal) {
-        this.classTotal = classTotal;
     }
 }

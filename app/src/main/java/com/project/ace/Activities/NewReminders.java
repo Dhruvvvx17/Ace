@@ -2,13 +2,19 @@ package com.project.ace.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -23,6 +29,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.ace.Dialogs.TimePickerDialog;
+import com.project.ace.Notifications.AlertReciever;
+import com.project.ace.Notifications.NotificationHelper;
 import com.project.ace.R;
 
 import java.text.DateFormat;
@@ -44,6 +52,9 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
 
     private String userUID,title,description,time,date;
     int currentDay,check1,check2;
+    int nYear,nMonth,nDay,nHours,nMinutes;
+
+//    private NotificationHelper mNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +74,17 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
         setDate = findViewById(R.id.date_picker);
         setReminder = findViewById(R.id.set_reminder);
 
+//        mNotif = new NotificationHelper(this);
+
         setDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
                 DialogFragment datePicker = new com.project.ace.Dialogs.DatePickerDialog();
                 datePicker.show(getSupportFragmentManager(),"date picker");
             }
@@ -79,11 +98,26 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
             }
         });
 
+//        setDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NotificationCompat.Builder nb = mNotif.getChannel2Notification("Hi","This is also working");
+//                mNotif.getManager().notify(2,nb.build());
+//            }
+//        });
+//
+//        setTime.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NotificationCompat.Builder nb = mNotif.getChannel1Notification("Hi","This is working");
+//                mNotif.getManager().notify(1,nb.build());
+//            }
+//        });
+
 
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 userUID = user.getUid();
                 title = reminderTitle.getText().toString().trim();
                 description = reminderDescription.getText().toString().trim();
@@ -99,10 +133,10 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                     //Everything is valid, upload data to fire-base. Set alarm.
 
                     Map<String, Object> reminder = new HashMap<>();
-                    reminder.put("title", title);
-                    reminder.put("description",description);
-                    reminder.put("date",date);
-                    reminder.put("time",time);
+                    reminder.put("reminderTitle", title);
+                    reminder.put("reminderDescription",description);
+                    reminder.put("reminderDate",date);
+                    reminder.put("reminderTime",time);
                     reminder.put("userUID",userUID);
                     db.collection("Reminder")
                             .document()
@@ -119,6 +153,17 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
+
+                    Calendar c = Calendar.getInstance();
+                    c.set(Calendar.HOUR_OF_DAY,nHours);
+                    c.set(Calendar.MINUTE,nMinutes);
+                    c.set(Calendar.SECOND,0);
+                    c.set(Calendar.YEAR,nYear);
+                    c.set(Calendar.MONTH,nMonth);
+                    c.set(Calendar.DAY_OF_MONTH,nDay);
+
+                    startAlarm(c);
+
                     finish();
                 }
             }
@@ -142,6 +187,9 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                 check1 = 1;
             else
                 check1 = 0;
+            nDay = dayOfMonth;
+            nMonth = month;
+            nYear = year;
         }
     }
 
@@ -171,30 +219,28 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
     }
 
     public void setTime(int minutes,int hours){
-        String mins,hrs,AMorPM = "AM";
-        mins = Integer.toString(minutes);
-        hrs = Integer.toString(hours);
-        switch (hrs){
-            case "13":  hrs = "1";   AMorPM = "PM";  break;
-            case "14":  hrs = "2";   AMorPM = "PM";  break;
-            case "15":  hrs = "3";   AMorPM = "PM";  break;
-            case "16":  hrs = "4";   AMorPM = "PM";  break;
-            case "17":  hrs = "5";   AMorPM = "PM";  break;
-            case "18":  hrs = "6";   AMorPM = "PM";  break;
-            case "19":  hrs = "7";   AMorPM = "PM";  break;
-            case "20":  hrs = "8";   AMorPM = "PM";  break;
-            case "21":  hrs = "9";   AMorPM = "PM";  break;
-            case "22":  hrs = "10";  AMorPM = "PM";  break;
-            case "23":  hrs = "11";  AMorPM = "PM";  break;
-            case "24":  hrs = "12";  AMorPM = "PM";  break;
-        }
-        if(mins.length() == 1)
-            mins = "0"+mins;
-        if(hrs.length() == 1)
-            hrs = "0"+hrs;
 
-        String time = hrs+":"+mins+" "+AMorPM;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY,hours);
+        c.set(Calendar.MINUTE,minutes);
+        c.set(Calendar.SECOND,0);
+
+        nMinutes = minutes;
+        nHours = hours;
+
+        time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
         reminderTime.setText(time);
         reminderTime.setVisibility(View.VISIBLE);
+    }
+
+    private void startAlarm(Calendar c){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, AlertReciever.class);
+        intent.putExtra("Title",reminderTitle.getText().toString());
+        intent.putExtra("Description",reminderDescription.getText().toString());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,1,intent,0);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 }
