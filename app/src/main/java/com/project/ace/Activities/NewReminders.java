@@ -2,12 +2,11 @@ package com.project.ace.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -24,20 +23,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.ace.Dialogs.TimePickerDialog;
-import com.project.ace.Notifications.AlertReciever;
-import com.project.ace.Notifications.NotificationHelper;
+import com.project.ace.Notifications.AlertReceiver;
 import com.project.ace.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class NewReminders extends AppCompatActivity implements android.app.TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
@@ -54,12 +51,14 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
     int currentDay,check1,check2;
     int nYear,nMonth,nDay,nHours,nMinutes;
 
-//    private NotificationHelper mNotif;
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_reminders);
+
+        notificationManagerCompat = NotificationManagerCompat.from(this);
 
         Calendar c = Calendar.getInstance();
         currentDay = c.get(Calendar.DAY_OF_MONTH);
@@ -73,8 +72,6 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
         setTime = findViewById(R.id.time_picker);
         setDate = findViewById(R.id.date_picker);
         setReminder = findViewById(R.id.set_reminder);
-
-//        mNotif = new NotificationHelper(this);
 
         setDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,23 +95,6 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
             }
         });
 
-//        setDate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NotificationCompat.Builder nb = mNotif.getChannel2Notification("Hi","This is also working");
-//                mNotif.getManager().notify(2,nb.build());
-//            }
-//        });
-//
-//        setTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NotificationCompat.Builder nb = mNotif.getChannel1Notification("Hi","This is working");
-//                mNotif.getManager().notify(1,nb.build());
-//            }
-//        });
-
-
         setReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,12 +112,18 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                 else{
                     //Everything is valid, upload data to fire-base. Set alarm.
 
+                    Random rand = new Random();
+                    int reminderID = rand.nextInt(10000);
+
+
                     Map<String, Object> reminder = new HashMap<>();
                     reminder.put("reminderTitle", title);
                     reminder.put("reminderDescription",description);
                     reminder.put("reminderDate",date);
                     reminder.put("reminderTime",time);
+                    reminder.put("reminderID",reminderID);
                     reminder.put("userUID",userUID);
+                    reminder.put("status","pending");
                     db.collection("Reminder")
                             .document()
                             .set(reminder)
@@ -162,7 +148,7 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
                     c.set(Calendar.MONTH,nMonth);
                     c.set(Calendar.DAY_OF_MONTH,nDay);
 
-                    startAlarm(c);
+                    startAlarm(c,reminderID,title,description);
 
                     finish();
                 }
@@ -233,14 +219,18 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
         reminderTime.setVisibility(View.VISIBLE);
     }
 
-    private void startAlarm(Calendar c){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    public void startAlarm(Calendar c,int id,String title,String description){
 
-        Intent intent = new Intent(this, AlertReciever.class);
-        intent.putExtra("Title",reminderTitle.getText().toString());
-        intent.putExtra("Description",reminderDescription.getText().toString());
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,1,intent,0);
+
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("Title",title);
+        intent.putExtra("Description",description);
+        intent.putExtra("Notification_id",id);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,id,intent,0);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        Log.d("New","Notification set with id " + id);
     }
 }

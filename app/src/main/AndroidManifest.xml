@@ -27,7 +27,7 @@
             android:name=".Activities.MainActivity"
             android:theme="@style/NoActionBar" />
 
-        <receiver android:name=".Notifications.AlertReciever"/>
+        <receiver android:name=".Notifications.AlertReceiver"/>
     </application>
 
 </manifest>

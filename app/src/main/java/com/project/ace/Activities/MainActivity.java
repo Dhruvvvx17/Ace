@@ -12,6 +12,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,11 +72,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AttendanceFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_attendance);
-        }
-
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -88,6 +86,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        String received = getIntent().getStringExtra("notificationClick");
+        if(received != null && mAuth.getCurrentUser()!=null){
+            switch (received){
+                case "openReminders":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new RemindersFragment()).commit();
+                    navigationView.setCheckedItem(R.id.nav_reminders);
+                    break;
+                default:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AttendanceFragment()).commit();
+                    navigationView.setCheckedItem(R.id.nav_attendance);
+                    break;
+            }
+        }
+        else if(received != null && mAuth.getCurrentUser() == null){
+            startActivity(new Intent(this,SignUpActivity.class));
+        }
+        else if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AttendanceFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_attendance);
+        }
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -96,20 +116,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         FirebaseUser user = mAuth.getCurrentUser();
-        userName = user.getDisplayName();
-        userEmail = user.getEmail();
-        userProfileURI = user.getPhotoUrl().toString();
+        if(user != null){
+            userName = user.getDisplayName();
+            userEmail = user.getEmail();
+            userProfileURI = user.getPhotoUrl().toString();
 
-        navigationView = findViewById(R.id.nav_view);
-        View v = navigationView.getHeaderView(0);
 
-        userNameTextview = v.findViewById(R.id.nav_header_name);
-        userEmailTextview = v.findViewById(R.id.nav_header_email);
-        userProfileImage = v.findViewById(R.id.nav_header_profile);
+            navigationView = findViewById(R.id.nav_view);
+            View v = navigationView.getHeaderView(0);
 
-        userNameTextview.setText(userName);
-        userEmailTextview.setText(userEmail);
-        Picasso.get().load(userProfileURI).into(userProfileImage);
+            userNameTextview = v.findViewById(R.id.nav_header_name);
+            userEmailTextview = v.findViewById(R.id.nav_header_email);
+            userProfileImage = v.findViewById(R.id.nav_header_profile);
+
+            userNameTextview.setText(userName);
+            userEmailTextview.setText(userEmail);
+            Picasso.get().load(userProfileURI).into(userProfileImage);
+        }
     }
 
     private void signOut() {

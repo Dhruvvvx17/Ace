@@ -31,4 +31,6 @@
     <string name="title_name">Title</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="task_done">task done</string>
+    <string name="delete_reminder">delete reminder</string>
 </resources>
