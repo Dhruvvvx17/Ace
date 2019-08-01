@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -34,6 +35,8 @@ public class NotificationHelper extends ContextWrapper {
         NotificationChannel channel1 = new NotificationChannel(channel1ID,channel1Name, NotificationManager.IMPORTANCE_HIGH);
         channel1.enableLights(true);
         channel1.enableVibration(true);
+        channel1.setLightColor(Color.BLUE);
+        channel1.setVibrationPattern(new long[] { 1000, 1000, 1000, 1000, 1000 });
         channel1.setLightColor(R.color.colorPrimary);
         channel1.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
@@ -58,8 +61,9 @@ public class NotificationHelper extends ContextWrapper {
         return new NotificationCompat.Builder(getApplicationContext(),channel1ID)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setSmallIcon(R.drawable.ic_temp)
+                .setSmallIcon(R.drawable.ic_launcher_new_round)
                 .setContentIntent(contentIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
     }
 }
