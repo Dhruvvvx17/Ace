@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 
@@ -50,7 +51,7 @@ public class NotificationHelper extends ContextWrapper {
         return mManager;
     }
 
-    public NotificationCompat.Builder getChannel1Notification(String title,String message){
+    public NotificationCompat.Builder getChannel1Notification(String title,String message,Context context){
 
         Intent newActivityIntent = new Intent(this, MainActivity.class);
         newActivityIntent.putExtra("notificationClick","openReminders");
@@ -62,6 +63,7 @@ public class NotificationHelper extends ContextWrapper {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.drawable.ic_launcher_new_round)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher_new_round))
                 .setContentIntent(contentIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);

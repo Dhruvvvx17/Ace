@@ -21,7 +21,7 @@ public class AlertReceiver extends BroadcastReceiver {
         id = extras.getInt("Notification_id");
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannel1Notification(title,description);
+        NotificationCompat.Builder nb = notificationHelper.getChannel1Notification(title,description,context);
         notificationHelper.getManager().notify(id,nb.build());
     }
 }
