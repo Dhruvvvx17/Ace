@@ -7,6 +7,7 @@
     <color name="Black">#000000</color>
     <color name="Blue1">#0082c8</color>
     <color name="Blue2">#667db6</color>
-    <color name="Confirmation_green">#7CFC00</color>
+    <color name="Confirmation_green">#64DD17</color>
     <color name="ic_launcher_background">#26A69A</color>
+    <color name="card_background">#A9A9A9</color>
 </resources>

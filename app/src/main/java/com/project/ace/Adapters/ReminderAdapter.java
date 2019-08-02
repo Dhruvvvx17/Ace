@@ -48,10 +48,11 @@ public class ReminderAdapter extends FirestoreRecyclerAdapter<Reminder, Reminder
         status = model.getStatus();
 
         if(status.equals("done")){
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#7CFC00"));
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#7CFC00"));    //green
+            holder.done.setVisibility(View.INVISIBLE);
         }
         else{
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#A9A9A9"));
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#A9A9A9"));    //grey
         }
 
         final Context context = holder.cardView.getContext();
