@@ -3,18 +3,17 @@
 
     <item android:id="@+id/monday_item"
         android:title="Monday"
-        android:icon="@drawable/ic_temp" />
+        android:icon="@drawable/ic_icon_monday" />
     <item android:id="@+id/tuesday_item"
         android:title="Tuesday"
-        android:icon="@drawable/ic_temp" />
+        android:icon="@drawable/ic_icon_tuesday" />
     <item android:id="@+id/wednesday_item"
         android:title="Wednesday"
-        android:icon="@drawable/ic_temp" />
+        android:icon="@drawable/ic_icon_wednesday" />
     <item android:id="@+id/thursday_item"
         android:title="Thursday"
-        android:icon="@drawable/ic_temp" />
+        android:icon="@drawable/ic_icon_thursday" />
     <item android:id="@+id/friday_item"
         android:title="Friday"
-        android:icon="@drawable/ic_temp" />
-
+        android:icon="@drawable/ic_icon_friday" />
 </menu>

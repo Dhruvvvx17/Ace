@@ -1,5 +1,6 @@
 package com.project.ace.Fragments;
 
+
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ public class TimetableFragment extends Fragment {
 
         BottomNavigationView bottomNav = view.findViewById(R.id.timetable_bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
 
         getChildFragmentManager().beginTransaction().replace(R.id.timetable_fragment_container,new MondayFragment()).commit();
         return view;
