@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.NewReminders"
-            android:label="New Reminder"/>
+        <activity android:name=".Activities.AddTimetable"></activity>
+        <activity
+            android:name=".Activities.NewReminders"
+            android:label="New Reminder" />
         <activity
             android:name=".Activities.SignUpActivity"
             android:theme="@style/NoActionBarHome">
@@ -27,7 +29,7 @@
             android:name=".Activities.MainActivity"
             android:theme="@style/NoActionBar" />
 
-        <receiver android:name=".Notifications.AlertReceiver"/>
+        <receiver android:name=".Notifications.AlertReceiver" />
     </application>
 
 </manifest>
