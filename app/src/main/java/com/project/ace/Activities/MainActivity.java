@@ -88,9 +88,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
         SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("timeTableSet",false);
-        editor.apply();
+        boolean c1 = sharedPreferences.getBoolean("TTValidCheck",false);
+        if(!c1){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("timeTableSet",false);
+            editor.apply();
+        }
 
         String received = getIntent().getStringExtra("notificationClick");
         if(received != null && mAuth.getCurrentUser()!=null){

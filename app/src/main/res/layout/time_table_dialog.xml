@@ -8,9 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Add your school/college timetable?"
+        android:text="@string/timetable_dialog_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textAlignment="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:padding="10dp"/>
 
 </RelativeLayout>
