@@ -59,6 +59,7 @@ public class RemindersFragment extends Fragment {
     private void setUpRecyclerView(){
         Query query = ReminderRef
                 .whereEqualTo("userUID",user.getUid());
+//                .orderBy("reminderTitle", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<Reminder> options = new FirestoreRecyclerOptions.Builder<Reminder>()
                 .setQuery(query, Reminder.class)
@@ -68,8 +69,8 @@ public class RemindersFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.reminder_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

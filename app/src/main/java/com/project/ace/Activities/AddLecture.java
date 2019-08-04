@@ -1,11 +1,13 @@
 package com.project.ace.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,11 +16,19 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.ace.Dialogs.TimePickerDialog;
 import com.project.ace.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class AddLecture extends AppCompatActivity implements android.app.TimePickerDialog.OnTimeSetListener{
 
@@ -26,9 +36,13 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
     TextView startTime, endTime;
     Button setStartTime,setEndTime,addLecture;
 
-    String startTimeString,endTimeString;
+    String startTimeString,endTimeString,userUID,lectureTitleString,lectureCodeString;
     boolean startTimeCheck;
     int startTimeHour = -1,startTimeMin,endTimeHour = -1,endTimeMin;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +50,7 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
         setContentView(R.layout.activity_add_lecture);
 
         Intent intent = getIntent();
-        String currentDay = intent.getStringExtra("title");
+        final String currentDay = intent.getStringExtra("title");
         setTitle(currentDay+"'s Lecture");
 
         lectureTitle = findViewById(R.id.new_lecture_title);
@@ -85,6 +99,47 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
             @Override
             public void onClick(View view) {
                 //Add to fire-base appropriate document
+
+                userUID = user.getUid();
+                lectureTitleString = lectureTitle.getText().toString().trim();
+                lectureCodeString = lectureCode.getText().toString().trim();
+                if(lectureTitleString.isEmpty())
+                    Toast.makeText(getApplicationContext(),"Enter a title",Toast.LENGTH_SHORT).show();
+                else if(startTimeString.isEmpty())
+                    Toast.makeText(getApplicationContext(),"Set a valid lecture start time",Toast.LENGTH_SHORT).show();
+                else if(endTimeString.isEmpty())
+                    Toast.makeText(getApplicationContext(),"Set a valid lecture end time",Toast.LENGTH_SHORT).show();
+                else {
+                    //Everything is valid, upload data to fire-base. Set alarm.
+
+                    Random rand = new Random();
+                    int lectureNotificationID = rand.nextInt((20000-10000)+1)+10000;
+
+                    Map<String, Object> lecture = new HashMap<>();
+                    lecture.put("lectureTitle", lectureTitleString);
+                    lecture.put("lectureCode",lectureCodeString);
+                    lecture.put("lectureStartTime",startTimeString);
+                    lecture.put("lectureEndTime",endTimeString);
+                    lecture.put("lectureNotificationID",lectureNotificationID);
+                    lecture.put("day",currentDay);
+                    lecture.put("userUID",userUID);
+                    db.collection("Timetable")
+                            .document()
+                            .set(lecture)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("lecture", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("lecture", "Error writing document", e);
+                                }
+                            });
+
+                }
                 finish();
             }
         });
