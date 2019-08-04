@@ -1,6 +1,7 @@
 package com.project.ace.Fragments;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.project.ace.Dialogs.AddNewLectureDialog;
+import com.project.ace.Activities.AddLecture;
 import com.project.ace.Dialogs.NewCourseDialog;
 import com.project.ace.Dialogs.TimeTableDialog;
 import com.project.ace.R;
@@ -111,29 +112,29 @@ public class TimetableFragment extends Fragment {
     private void addLectureDetails(String currentDay){
         switch(currentDay){
             case "Monday":
-                AddNewLectureDialog mondayDialog = new AddNewLectureDialog(currentDay);
-                mondayDialog.show(getFragmentManager(),"Add monday lecture");
-                Toast.makeText(getContext(),"It's Monday",Toast.LENGTH_SHORT).show();
+                Intent i1 = new Intent(getContext(), AddLecture.class);
+                i1.putExtra("title",currentDay);
+                getContext().startActivity(i1);
                 break;
             case "Tuesday":
-                AddNewLectureDialog tuesdayDialog = new AddNewLectureDialog(currentDay);
-                tuesdayDialog.show(getFragmentManager(),"Add monday lecture");
-                Toast.makeText(getContext(),"It's Tuesday",Toast.LENGTH_SHORT).show();
+                Intent i2 = new Intent(getContext(), AddLecture.class);
+                i2.putExtra("title",currentDay);
+                getContext().startActivity(i2);
                 break;
             case "Wednesday":
-                AddNewLectureDialog wednesdayDialog = new AddNewLectureDialog(currentDay);
-                wednesdayDialog.show(getFragmentManager(),"Add monday lecture");
-                Toast.makeText(getContext(),"It's Wednesday",Toast.LENGTH_SHORT).show();
+                Intent i3= new Intent(getContext(), AddLecture.class);
+                i3.putExtra("title",currentDay);
+                getContext().startActivity(i3);
                 break;
             case "Thursday":
-                AddNewLectureDialog thursdayDialog = new AddNewLectureDialog(currentDay);
-                thursdayDialog.show(getFragmentManager(),"Add monday lecture");
-                Toast.makeText(getContext(),"It's Thursday",Toast.LENGTH_SHORT).show();
-                break;
+                Intent i4 = new Intent(getContext(), AddLecture.class);
+                i4.putExtra("title",currentDay);
+                getContext().startActivity(i4);
+                 break;
             case "Friday":
-                AddNewLectureDialog fridayDialog = new AddNewLectureDialog(currentDay);
-                fridayDialog.show(getFragmentManager(),"Add monday lecture");
-                Toast.makeText(getContext(),"It's Friday",Toast.LENGTH_SHORT).show();
+                Intent i5 = new Intent(getContext(), AddLecture.class);
+                i5.putExtra("title",currentDay);
+                getContext().startActivity(i5);
                 break;
         }
     }

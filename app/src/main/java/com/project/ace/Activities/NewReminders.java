@@ -90,6 +90,12 @@ public class NewReminders extends AppCompatActivity implements android.app.TimeP
         setTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+
                 DialogFragment timePicker = new TimePickerDialog();
                 timePicker.show(getSupportFragmentManager(),"time picker");
             }
