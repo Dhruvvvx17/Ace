@@ -55,8 +55,8 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
                 holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccffcc"));
                 break;
             case "Wednesday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
-                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#990000"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ffcccc"));
                 break;
             case "Thursday":
                 holder.lectureTimings.setTextColor(Color.parseColor("#003380"));

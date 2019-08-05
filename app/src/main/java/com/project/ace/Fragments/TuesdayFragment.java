@@ -27,10 +27,10 @@ public class TuesdayFragment extends Fragment {
     private CollectionReference TimetableRef = db.collection("Timetable");
     private TimetableAdapter adapter;
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
 
-    View view;
+    private View view;
 
     @Nullable
     @Override
