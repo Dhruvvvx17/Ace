@@ -47,24 +47,24 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
 
         switch (day){
             case "Monday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));            //blue
                 holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
                 break;
             case "Tuesday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#00b300"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#008000"));            //green
                 holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccffcc"));
                 break;
             case "Wednesday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#990000"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#990000"));            //red
                 holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ffcccc"));
                 break;
             case "Thursday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#732673"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#732673"));            //purple
                 holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ecc6ec"));
                 break;
             case "Friday":
-                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
-                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                holder.lectureTimings.setTextColor(Color.parseColor("#ff6600"));            //orange
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ffd1b3"));
                 break;
         }
     }
