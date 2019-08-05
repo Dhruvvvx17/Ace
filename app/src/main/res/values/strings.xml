@@ -34,4 +34,14 @@
     <string name="task_done">task done</string>
     <string name="delete_reminder">delete reminder</string>
     <string name="timetable_dialog_text">Use the bottom navigation to navigate through the days of the week. \nTap the + icon to add lecture details of that particular day.</string>
+    <string name="lecture_title">Lecture title</string>
+    <string name="lecture_more_options">Lecture - more options</string>
+    <string name="lecture_course_code">Lecture course code</string>
+    <string name="lecture_timings">Lecture timings</string>
+    <string name="professor">Professor</string>
+    <string name="room_no">Room no.</string>
+    <string name="room_number_optional">Room number (optional)</string>
+    <string name="professor_s_name_optional">Professor\'s name (optional)</string>
+    <string name="set_end_time_button_text">SET END TIME</string>
+    <string name="set_start_time_button_text">SET START TIME</string>
 </resources>

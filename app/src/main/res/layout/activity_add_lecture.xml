@@ -9,7 +9,7 @@
         android:id="@+id/new_lecture_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="76dp"
         android:hint="@string/course_name"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
@@ -21,14 +21,33 @@
         android:layout_below="@+id/new_lecture_title"
         android:ellipsize="end"
         android:hint="@string/course_code"
-        android:maxLines="4"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <EditText
+        android:id="@+id/new_lecture_professor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_lecture_code"
+        android:hint="@string/professor_s_name_optional"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <EditText
+        android:id="@+id/new_lecture_room_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_lecture_professor"
+        android:ellipsize="end"
+        android:hint="@string/room_number_optional"
+        android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:id="@+id/lecture_start_string"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_lecture_code"
+        android:layout_below="@+id/new_lecture_room_number"
         android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
@@ -39,7 +58,7 @@
         android:id="@+id/lecture_start_time_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_lecture_code"
+        android:layout_below="@+id/new_lecture_room_number"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/lecture_start_string"
@@ -49,12 +68,12 @@
         android:id="@+id/start_time_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/new_lecture_code"
+        android:layout_below="@+id/new_lecture_room_number"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:background="@color/fui_transparent"
         android:padding="4dp"
-        android:text="SET START TIME"
+        android:text="@string/set_start_time_button_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/colorAccent" />
 
@@ -88,7 +107,7 @@
         android:layout_marginTop="5dp"
         android:background="@color/fui_transparent"
         android:padding="4dp"
-        android:text="SET END TIME"
+        android:text="@string/set_end_time_button_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/colorAccent" />
 

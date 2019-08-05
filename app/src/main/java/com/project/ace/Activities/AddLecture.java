@@ -32,11 +32,11 @@ import java.util.Random;
 
 public class AddLecture extends AppCompatActivity implements android.app.TimePickerDialog.OnTimeSetListener{
 
-    EditText lectureTitle,lectureCode;
+    EditText lectureTitle,lectureCode,lectureProfessor,lectureRoomNo;
     TextView startTime, endTime;
     Button setStartTime,setEndTime,addLecture;
 
-    String startTimeString,endTimeString,userUID,lectureTitleString,lectureCodeString;
+    String startTimeString="",endTimeString="",userUID,lectureTitleString,lectureCodeString,lectureProfessorString,lectureRoomNoString;
     boolean startTimeCheck;
     int startTimeHour = -1,startTimeMin,endTimeHour = -1,endTimeMin;
 
@@ -60,6 +60,8 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
         setStartTime = findViewById(R.id.start_time_picker);
         setEndTime = findViewById(R.id.end_time_picker);
         addLecture = findViewById(R.id.add_lecture);
+        lectureProfessor = findViewById(R.id.new_lecture_professor);
+        lectureRoomNo = findViewById(R.id.new_lecture_room_number);
 
         setStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,11 +117,20 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
                     Random rand = new Random();
                     int lectureNotificationID = rand.nextInt((20000-10000)+1)+10000;
 
+                    lectureProfessorString = lectureProfessor.getText().toString().trim();
+                    if(lectureProfessorString.isEmpty())
+                        lectureProfessorString = "N/A";
+                    lectureRoomNoString = lectureRoomNo.getText().toString().trim();
+                    if(lectureRoomNoString.isEmpty())
+                        lectureRoomNoString = "N/A";
+
                     Map<String, Object> lecture = new HashMap<>();
                     lecture.put("lectureTitle", lectureTitleString);
                     lecture.put("lectureCode",lectureCodeString);
                     lecture.put("lectureStartTime",startTimeString);
                     lecture.put("lectureEndTime",endTimeString);
+                    lecture.put("lectureProfessor",lectureProfessorString);
+                    lecture.put("lectureRoom",lectureRoomNoString);
                     lecture.put("lectureNotificationID",lectureNotificationID);
                     lecture.put("day",currentDay);
                     lecture.put("userUID",userUID);
@@ -129,18 +140,18 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("lecture", "DocumentSnapshot successfully written!");
+                                    Log.d("new_lecture", "DocumentSnapshot successfully written!");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.w("lecture", "Error writing document", e);
+                                    Log.w("new_lecture", "Error writing document", e);
                                 }
                             });
 
+                    finish();
                 }
-                finish();
             }
         });
     }
