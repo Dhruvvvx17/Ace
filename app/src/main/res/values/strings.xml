@@ -44,4 +44,6 @@
     <string name="professor_s_name_optional">Professor\'s name (optional)</string>
     <string name="set_end_time_button_text">SET END TIME</string>
     <string name="set_start_time_button_text">SET START TIME</string>
+    <string name="attendance_dialog_text">Tap the + icon to add a new course and track its attendance. \nIn the list of courses, tap the green button to indicate you\'ve attended a class and tap the red button to indicate you\'ve missed a class.  \nLong press the 3 vertical dots to access more options related to a particular course.</string>
+    <string name="reminder_dialog_text">Tap the + icon to add a new reminder. \n All reminders will be notified at the time set. \n Tap the tick icon in the list of reminders to indicate if the particular task is completed. \nTap the bin icon to delete the reminder.</string>
 </resources>

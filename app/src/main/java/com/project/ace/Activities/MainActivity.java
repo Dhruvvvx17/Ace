@@ -88,8 +88,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
         SharedPreferences sharedPreferences = getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
-        boolean c1 = sharedPreferences.getBoolean("TTValidCheck",false);
+        boolean c1 = sharedPreferences.getBoolean("AttendanceCheck",false);
         if(!c1){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("attendanceSet",false);
+            editor.apply();
+        }
+        boolean c2 = sharedPreferences.getBoolean("ReminderCheck",false);
+        if(!c2){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("reminderSet",false);
+            editor.apply();
+        }
+        boolean c3 = sharedPreferences.getBoolean("TTValidCheck",false);
+        if(!c3){
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("timeTableSet",false);
             editor.apply();
@@ -174,9 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_timetable:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new TimetableFragment()).commit();
                 break;
-            case R.id.nav_files:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FilesFragment()).commit();
-                break;
+//            case R.id.nav_files:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FilesFragment()).commit();
+//                break;
             case R.id.nav_sign_out:
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);

@@ -2,6 +2,7 @@ package com.project.ace.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +24,13 @@ import com.google.firebase.firestore.Query;
 import com.project.ace.Activities.NewReminders;
 import com.project.ace.Adapters.AttendanceAdapter;
 import com.project.ace.Adapters.ReminderAdapter;
+import com.project.ace.Dialogs.AttendanceAlertDialog;
+import com.project.ace.Dialogs.ReminderAlertDialog;
 import com.project.ace.R;
 import com.project.ace.RecyclerViewItems.Attendance;
 import com.project.ace.RecyclerViewItems.Reminder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class RemindersFragment extends Fragment {
 
@@ -35,6 +40,8 @@ public class RemindersFragment extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
+
+    private boolean checkSharedPrefs;
 
     View view;
     FloatingActionButton addNewReminder;
@@ -52,6 +59,17 @@ public class RemindersFragment extends Fragment {
                 setNewReminder();
             }
         });
+
+        if(!checkIfRemindersExists()){
+            ReminderAlertDialog reminderAlertDialog = new ReminderAlertDialog();
+            reminderAlertDialog.show(getFragmentManager(),"Reminder dialog");
+            SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("reminderSet",true);
+            editor.putBoolean("ReminderCheck",true);
+            editor.apply();
+        }
+
         setUpRecyclerView();
         return view;
     }
@@ -78,6 +96,16 @@ public class RemindersFragment extends Fragment {
         Intent i = new Intent(getActivity(), NewReminders.class);
         startActivity(i);
     }
+
+    private boolean checkIfRemindersExists(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
+        checkSharedPrefs = sharedPreferences.getBoolean("reminderSet",false);
+        if(checkSharedPrefs)
+            return true;
+        else
+            return false;
+    }
+
 
     @Override
     public void onStart() {

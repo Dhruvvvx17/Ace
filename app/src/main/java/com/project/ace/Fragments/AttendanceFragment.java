@@ -1,5 +1,6 @@
 package com.project.ace.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +20,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.project.ace.Dialogs.AttendanceAlertDialog;
+import com.project.ace.Dialogs.TimeTableAlertDialog;
 import com.project.ace.RecyclerViewItems.Attendance;
 import com.project.ace.Adapters.AttendanceAdapter;
 import com.project.ace.Dialogs.NewCourseDialog;
 import com.project.ace.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AttendanceFragment extends Fragment  {
 
@@ -31,6 +36,8 @@ public class AttendanceFragment extends Fragment  {
     private AttendanceAdapter adapter;
     View view;
     FloatingActionButton addNewCourse;
+
+    private boolean checkSharedPrefs;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -54,6 +61,17 @@ public class AttendanceFragment extends Fragment  {
                 openDialog();
             }
         });
+
+        if(!checkIfAttendanceExists()){
+            AttendanceAlertDialog attendanceAlertDialog = new AttendanceAlertDialog();
+            attendanceAlertDialog.show(getFragmentManager(),"Attendance dialog");
+            SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("attendanceSet",true);
+            editor.putBoolean("AttendanceCheck",true);
+            editor.apply();
+        }
+
         setUpRecyclerView();
         return view;
     }
@@ -97,6 +115,14 @@ public class AttendanceFragment extends Fragment  {
         }
     }
 
+    private boolean checkIfAttendanceExists(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFS",MODE_PRIVATE);
+        checkSharedPrefs = sharedPreferences.getBoolean("attendanceSet",false);
+        if(checkSharedPrefs)
+            return true;
+        else
+            return false;
+    }
 
 
     @Override
