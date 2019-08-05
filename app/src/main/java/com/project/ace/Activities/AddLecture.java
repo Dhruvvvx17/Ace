@@ -39,6 +39,7 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
     String startTimeString="",endTimeString="",userUID,lectureTitleString,lectureCodeString,lectureProfessorString,lectureRoomNoString;
     boolean startTimeCheck;
     int startTimeHour = -1,startTimeMin,endTimeHour = -1,endTimeMin;
+    int checkStart;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser user = mAuth.getCurrentUser();
@@ -119,10 +120,12 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
 
                     lectureProfessorString = lectureProfessor.getText().toString().trim();
                     if(lectureProfessorString.isEmpty())
-                        lectureProfessorString = "N/A";
+                        lectureProfessorString = "";
                     lectureRoomNoString = lectureRoomNo.getText().toString().trim();
                     if(lectureRoomNoString.isEmpty())
-                        lectureRoomNoString = "N/A";
+                        lectureRoomNoString = "";
+                    if(lectureCodeString.isEmpty())
+                        lectureCodeString = "";
 
                     Map<String, Object> lecture = new HashMap<>();
                     lecture.put("lectureTitle", lectureTitleString);
@@ -132,6 +135,7 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
                     lecture.put("lectureProfessor",lectureProfessorString);
                     lecture.put("lectureRoom",lectureRoomNoString);
                     lecture.put("lectureNotificationID",lectureNotificationID);
+                    lecture.put("checkStart",checkStart);
                     lecture.put("day",currentDay);
                     lecture.put("userUID",userUID);
                     db.collection("Timetable")
@@ -170,6 +174,7 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
                 startTimeMin = minutes;
                 startTimeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
                 startTime.setText(startTimeString);
+                checkStart = hours;
             }
             else if(hours > endTimeHour) {
                 Toast.makeText(this,"Lecture start time cannot be after its end time",Toast.LENGTH_LONG).show();
@@ -182,6 +187,7 @@ public class AddLecture extends AppCompatActivity implements android.app.TimePic
                 startTimeMin = minutes;
                 startTimeString = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
                 startTime.setText(startTimeString);
+                checkStart = hours;
             }
         }
 

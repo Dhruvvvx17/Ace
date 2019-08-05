@@ -7,7 +7,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    app:cardBackgroundColor="@color/card_background"
+    app:cardBackgroundColor="#ccf2ff"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
@@ -26,20 +26,22 @@
             android:maxLines="1"
             android:paddingTop="5dp"
             android:text="@string/lecture_timings"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#003380" />
 
         <TextView
             android:id="@+id/lecture_course_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lecture_start_and_end_time"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@id/lecture_course_code"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_toStartOf="@id/lecture_course_code"
-            android:layout_alignParentStart="true"
+            android:textStyle="bold"
             android:text="@string/lecture_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <ImageButton
             android:id="@+id/lecture_more_options"
@@ -56,21 +58,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/lecture_start_and_end_time"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
-            android:text="@string/lecture_course_code"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:text="@string/professor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/lecture_course_professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/lecture_course_title"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/lecture_room_number"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_toStartOf="@id/lecture_room_number"
-            android:layout_alignParentStart="true"
-            android:text="@string/professor"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:text="@string/lecture_course_code"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/lecture_room_number"
@@ -80,7 +85,8 @@
             android:layout_alignParentEnd="true"
             android:maxLines="1"
             android:text="@string/room_no"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

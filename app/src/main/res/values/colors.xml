@@ -10,4 +10,6 @@
     <color name="Confirmation_green">#64DD17</color>
     <color name="ic_launcher_background">#26A69A</color>
     <color name="card_background">#A9A9A9</color>
+    <color name="navy_blue">#0000ff</color>
+    <color name="monday_blue_text">#003380</color>
 </resources>
