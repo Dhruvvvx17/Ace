@@ -40,6 +40,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textStyle="bold"
+            android:textColor="@color/Black"
             android:text="@string/lecture_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 

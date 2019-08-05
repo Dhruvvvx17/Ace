@@ -1,5 +1,6 @@
 package com.project.ace.Adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -42,6 +44,29 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
             holder.lectureRoomNumber.setText(roomNumber);
             holder.lectureRoomNumber.setVisibility(View.VISIBLE);
         }
+
+        switch (day){
+            case "Monday":
+                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                break;
+            case "Tuesday":
+                holder.lectureTimings.setTextColor(Color.parseColor("#00b300"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccffcc"));
+                break;
+            case "Wednesday":
+                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                break;
+            case "Thursday":
+                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                break;
+            case "Friday":
+                holder.lectureTimings.setTextColor(Color.parseColor("#003380"));
+                holder.timetableCard.setCardBackgroundColor(Color.parseColor("#ccf2ff"));
+                break;
+        }
     }
 
     @NonNull
@@ -60,6 +85,8 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
         TextView lectureRoomNumber;
         ImageButton lectureMoreOptions;
 
+        CardView timetableCard;
+
         public TimetableHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -69,6 +96,7 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
             lectureProfessor= itemView.findViewById(R.id.lecture_course_professor);
             lectureRoomNumber = itemView.findViewById(R.id.lecture_room_number);
             lectureMoreOptions = itemView.findViewById(R.id.lecture_more_options);
+            timetableCard = itemView.findViewById(R.id.timetable_item);
         }
     }
 }
