@@ -1,6 +1,8 @@
 package com.project.ace.Adapters;
 
 import android.graphics.Color;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.ace.R;
 import com.project.ace.RecyclerViewItems.Timetable;
 
 public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, TimetableAdapter.TimetableHolder> {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();     //firestore instance
 
     public TimetableAdapter(@NonNull FirestoreRecyclerOptions<Timetable> options) {
         super(options);
@@ -65,6 +72,25 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
         }
     }
 
+    public void deleteLecture(int position){
+        //delete from firebase
+        final String id = getSnapshots().getSnapshot(position).getId();
+        db.collection("Timetable").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("delete",id+" deleted");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("delete",id+" could not be deleted");
+                    }
+                });
+    }
+
     @NonNull
     @Override
     public TimetableHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -72,7 +98,7 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
         return new TimetableHolder(v);
     }
 
-    class TimetableHolder extends RecyclerView.ViewHolder{
+    class TimetableHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         TextView lectureTimings;
         TextView lectureTitle;
@@ -93,6 +119,14 @@ public class TimetableAdapter extends FirestoreRecyclerAdapter<Timetable, Timeta
             lectureRoomNumber = itemView.findViewById(R.id.lecture_room_number);
             lectureMoreOptions = itemView.findViewById(R.id.lecture_more_options);
             timetableCard = itemView.findViewById(R.id.timetable_item);
+
+            lectureMoreOptions.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
+            contextMenu.add(this.getAdapterPosition(),201,0,"Delete lecture");
         }
     }
 }

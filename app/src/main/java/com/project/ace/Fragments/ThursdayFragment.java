@@ -2,6 +2,7 @@ package com.project.ace.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -58,6 +59,17 @@ public class ThursdayFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getParentFragment().getActivity()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 201:
+                adapter.deleteLecture(item.getGroupId());
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override

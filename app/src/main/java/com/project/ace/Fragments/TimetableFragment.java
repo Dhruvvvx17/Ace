@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.ace.Activities.AddLecture;
+import com.project.ace.Adapters.TimetableAdapter;
 import com.project.ace.Dialogs.TimeTableAlertDialog;
 import com.project.ace.R;
 
@@ -29,7 +30,6 @@ public class TimetableFragment extends Fragment {
 
     private View view;
     private boolean checkSharedPrefs;
-
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference TimetableRef = db.collection("Timetable");
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
