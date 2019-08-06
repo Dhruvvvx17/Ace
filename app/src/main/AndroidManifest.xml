@@ -11,13 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.AddLecture"></activity>
+        <activity android:name=".Activities.AddLecture"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.NewReminders"
-            android:label="New Reminder" />
+            android:label="New Reminder"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activities.SignUpActivity"
-            android:theme="@style/NoActionBarHome">
+            android:theme="@style/NoActionBarHome"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
