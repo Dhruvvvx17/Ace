@@ -78,6 +78,8 @@ public class AttendanceFragment extends Fragment  {
 
     private void setUpRecyclerView() {
         Query query = AttendanceRef
+                .whereEqualTo("userUID",user.getUid())
+                .orderBy("courseName", Query.Direction.ASCENDING)
                 .whereEqualTo("userUID",user.getUid());
 
         FirestoreRecyclerOptions<Attendance> options = new FirestoreRecyclerOptions.Builder<Attendance>()
